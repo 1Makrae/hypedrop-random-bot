@@ -9,6 +9,9 @@ csv file with the cases very often since it takes forever to do so.
 Enjoy and good luck on your openings!
 
 My Github:
+https://github.com/1Makrae
+
+Github Repo:
 https://github.com/1Makrae/hypedrop-random-bot
 
 How to run program:

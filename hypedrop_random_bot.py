@@ -22,15 +22,16 @@ class Bot:
             except Exception:
                 pass
 
-    def generate_battle(self):
+    def generate_battle(self, budget, passthrough = False):
         decideMode = False
         decideNumCases = False
         decideFormat = False
         decideOpponent = False
-        total = 0
-        budget = self.decide_budget()
         remainingBudget = budget
         optionValid = False
+        if passthrough:
+            optionValid = True
+            decideMode = True
         while not optionValid:
             option = input(self.name + ": Would you like me to decide Crazy vs Regular Mode?\n 1. Y\n 2. N\n")
             try:
@@ -46,6 +47,9 @@ class Bot:
                 pass
 
         optionValid = False
+        if passthrough:
+            optionValid = True
+            decideNumCases = False
         while not optionValid:
             option = input(self.name + ": Would you like to choose the number of cases in the battle?\n 1. Y\n 2. N\n")
             try:
@@ -70,7 +74,7 @@ class Bot:
                 if avgBudget > remainingBudget:
                     avgBudget = remainingBudget
                 avgMinBudget = (remainingBudget/numCases) * 0.4
-                case = self.generate_case(avgBudget,avgMinBudget)
+                case = self.generate_case(avgBudget, avgMinBudget)
                 cases.append(self.cases.at[case,"Case"])
                 remainingBudget -= self.cases.at[case,self.region]
         else:
@@ -80,6 +84,9 @@ class Bot:
                 cases.append(self.cases.at[case, "Case"])
                 remainingBudget -= self.cases.at[case, self.region]
         optionValid = False
+        if passthrough:
+            optionValid = True
+            decideOpponent = True
         while not optionValid:
             option = input(self.name + ": Would you like me to choose your opponent for the battle?\n 1. Y\n 2. N\n")
             try:
@@ -94,6 +101,9 @@ class Bot:
             except Exception:
                 pass
         optionValid = False
+        if passthrough:
+            optionValid = True
+            decideFormat = True
         while not optionValid:
             option = input(self.name + ": Would you like me to choose the format of the battle?\n 1. Y\n 2. N\n")
             try:
@@ -138,7 +148,8 @@ class Bot:
                                        "Surprise Me\n4. Adjust Settings (Not Completed)\n5. Exit\n")
             try:
                 if action == "1" or action.lower() == "random battle":
-                    self.generate_battle()
+                    budget = self.decide_budget()
+                    self.generate_battle(budget)
                 elif action == "2" or action.lower() == "random solo open":
                     budget = self.decide_budget()
                     case = self.generate_case(budget)
@@ -147,7 +158,7 @@ class Bot:
                     print(self.name + ": Good Luck!")
                     input(self.name + ": If you don't make profit I will do better next time!\n")
                 elif action == "3" or action.lower() == "surprise me":
-                    self.generate_battle()
+                    self.surprise()
                 elif action == "4" or action.lower() == "adjust settings":
                     self.change_settings()
                 elif action == "5" or action.lower() == "exit":
@@ -221,6 +232,19 @@ class Bot:
             except Exception:
                 pass
         return num
+
+    def surprise(self):
+        budget = self.decide_budget()
+        rand = np.random.randint(2)
+        if rand == 0:
+            print("hi")
+            self.generate_battle(budget, True)
+        else:
+            case = self.generate_case(budget)
+            caseName = self.cases.at[case, 'Case']
+            print(self.name + ": I think you should do the " + caseName + " case")
+            print(self.name + ": Good Luck!")
+            input(self.name + ": If you don't make profit I will do better next time!\n")
 
 
 def main():

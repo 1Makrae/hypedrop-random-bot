@@ -17,5 +17,13 @@ Solo Open Decider:
 1. Decide your budget for the case
 2. Good luck opening!
 
+Surprise Me:
+1. Input your budget
+2. Will give you either a battle or solo open with everything decided for you
+3. Good luck opening
+
 Notes:
-1.Prices for the cases were last updated on January 4th 2023
+1. Prices for the cases were last updated on January 4th 2023
+2. The lowest value case that can be generated is proportional to the budget inputted.
+    Higher budget means that low value cases are not included in the case pool
+3. 
